@@ -10,7 +10,7 @@ namespace AutoQuest
         }
 
         [DataMember(IsRequired = true, Order = 1)]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
         public string Type { get; private set; }
@@ -19,10 +19,10 @@ namespace AutoQuest
         public string District { get; private set; }
 
         [DataMember(IsRequired = true, Order = 4)]
-        public double Long { get; private set; }
+        public double Long { get; set; }
 
         [DataMember(IsRequired = true, Order = 5)]
-        public double Lat { get; private set; }
+        public double Lat { get; set; }
 
         [DataMember(IsRequired = false, Order = 6, EmitDefaultValue = false)]
         public string AltName { get; private set; }
