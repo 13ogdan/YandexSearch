@@ -13,7 +13,7 @@ namespace AutoQuest
         public string Name { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
-        public string Type { get; private set; }
+        public string Type { get;  set; }
 
         [DataMember(IsRequired = false, Order = 3, EmitDefaultValue = false)]
         public string District { get; private set; }

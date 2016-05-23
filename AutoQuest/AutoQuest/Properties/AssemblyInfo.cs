@@ -12,7 +12,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("☺ Raccoon corporation ☻")]
 [assembly: AssemblyProduct("AutoQuest")]
-[assembly: AssemblyCopyright("☺ BSP ©  1989")]
+[assembly: AssemblyCopyright("☺ Raccoon corporation ©  1989")]
 [assembly: AssemblyTrademark("☺☻")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

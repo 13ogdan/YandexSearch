@@ -1,4 +1,4 @@
-// <copyright>3Shape A/S</copyright>
+ï»¿// <copyright>"â˜º Raccoon corporation Â©  1989"</copyright>
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,8 @@ namespace YandexSearch
 
         public Street(string line)
         {
-            const string country = "Óêğàèíà,";
-            const string city = "Êèåâ,";
+            const string country = "Ğ£ĞºÑ€Ğ°Ğ¸Ğ½Ğ°,";
+            const string city = "ĞšĞ¸ĞµĞ²,";
 
             // Fully clarified line
             if (line.StartsWith(country))

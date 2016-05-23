@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AutoQuest.ViewModels;assembly=AutoQuest"
+             x:Class="AutoQuest.Controls.StreetView">
+  <ContentView.BindingContext>
+    <viewModels:FilteredSteets/>
+  </ContentView.BindingContext>
+  <ContentView.Content>
+    <ListView ItemsSource="{Binding OrderedStreets, Mode=OneWay}" IsGroupingEnabled="False" CachingStrategy="RecycleElement" >
+      <ListView.ItemTemplate>
+        <DataTemplate>
+         <TextCell Text="{Binding Name}" Detail="{Binding DistanceRepr}" >
+         </TextCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </ContentView.Content>
+</ContentView>
