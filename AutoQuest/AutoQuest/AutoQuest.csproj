@@ -35,11 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\INavigationService.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Controls\CircleProgressBar.cs" />
     <Compile Include="Controls\Filter.xaml.cs">
       <DependentUpon>Filter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FilterSettings.xaml.cs">
+      <DependentUpon>FilterSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\SearchPageViewModel.cs" />
     <Compile Include="Controls\StreetView.xaml.cs">
       <DependentUpon>StreetView.xaml</DependentUpon>
     </Compile>
@@ -50,10 +58,11 @@
     <Compile Include="Street.cs" />
     <Compile Include="StreetLoader.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Filter.cs" />
-    <Compile Include="ViewModels\FilteredSteets.cs" />
+    <Compile Include="ViewModels\FilterViewModel.cs" />
+    <Compile Include="ViewModels\SteetsViewModel.cs" />
     <Compile Include="API\ILocationService.cs" />
-    <Compile Include="ViewModels\Street.cs" />
+    <Compile Include="ViewModels\StreetTypeViewModel.cs" />
+    <Compile Include="ViewModels\StreetViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\streets.json" />
@@ -89,6 +98,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\SearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\FilterSettings.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

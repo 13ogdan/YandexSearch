@@ -1,22 +1,23 @@
-﻿using System;
+﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
+
+using System;
 using Xamarin.Forms;
 
-namespace AutoQuest
+namespace AutoQuest.Controls
 {
     public class CircleProgressBar : Image
     {
         public CircleProgressBar()
         {
-            this.Source = ImageSource.FromResource("AutoQuest.Resources.Icons.Raccoon.png");
-            this.HorizontalOptions = LayoutOptions.Center;
-            this.VerticalOptions = LayoutOptions.Center;
+            Source = ImageSource.FromResource("AutoQuest.Resources.Icons.Raccoon.png");
+            HorizontalOptions = LayoutOptions.Center;
+            VerticalOptions = LayoutOptions.Center;
             Device.StartTimer(TimeSpan.FromMilliseconds(10), Callback);
-            
         }
 
         private bool Callback()
         {
-            Rotation = (Rotation + 1) % 360;
+            Rotation = (Rotation + 1)%360;
             return IsVisible;
         }
     }

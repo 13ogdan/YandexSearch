@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Json;

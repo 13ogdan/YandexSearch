@@ -11,14 +11,14 @@ namespace AutoQuestTest
     [TestClass]
     public class FilteredStreetsTest
     {
-        private FilteredSteets _streets;
+        private SteetsViewModel _streets;
 
         [TestInitialize]
         public void TestInitialize()
         {
             var sl = new StreetLoader();
             var streets = sl.LoadStreets();
-            _streets = new FilteredSteets(streets);
+            _streets = new SteetsViewModel(streets);
         }
 
         [TestMethod]

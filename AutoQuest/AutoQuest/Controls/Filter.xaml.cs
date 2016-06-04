@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
 
 using Xamarin.Forms;
 

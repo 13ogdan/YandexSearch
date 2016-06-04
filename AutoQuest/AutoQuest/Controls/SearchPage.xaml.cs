@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace AutoQuest.Controls
 {
-    public partial class StreetView : ContentView
+    public partial class SearchPage : ContentPage
     {
-        public StreetView()
+        public SearchPage()
         {
             InitializeComponent();
         }

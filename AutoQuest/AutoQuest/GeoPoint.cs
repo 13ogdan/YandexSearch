@@ -1,4 +1,4 @@
-﻿// <copyright>☺ Raccoon corporation ☻</copyright>
+﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
 
 using System;
 using System.Globalization;

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AutoQuest.ViewModels;assembly=AutoQuest"
+             x:Class="AutoQuest.Controls.FilterSettings" Title="Настройки поиска">
+  <ContentPage.BindingContext>
+    <viewModels:FilterViewModel/>
+  </ContentPage.BindingContext>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Label Text="Искать по старому названию: "/>
+    <Switch Grid.Row="0" 
+            Grid.Column="1" 
+            IsToggled="{Binding CheckAlternativeName}" />
+    <!--Max distance-->
+    <Label Text="{Binding MaxDistanceRepresentation, StringFormat='Максимальное расстояние: {0}'}" 
+           Grid.Row="1" 
+           Grid.Column="0"  
+           Grid.ColumnSpan="2"/>
+    <Slider Value="{Binding MaxDistance, Mode=TwoWay}"
+            Minimum="0"
+            Maximum="20"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2" />
+    <!--Type of the street-->
+    <ListView ItemsSource="{Binding Types}"  
+              Grid.Row="3" 
+              Grid.ColumnSpan="2" 
+              Grid.Column="0">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <SwitchCell Text="{Binding Name}" 
+                      On="{Binding Enable}"/>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+
+
+</ContentPage>

@@ -2,25 +2,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace AutoQuest.ViewModels
 {
-    public class Street : BaseViewModel
+    public class StreetViewModel : BaseViewModel
     {
         private readonly GeoPoint _centerStreetPoint;
-        private readonly AutoQuest.Street _street;
+        private readonly Street _street;
         private double _distance;
-        private string _distance1 = string.Empty;
+        private string _distanceRepr = string.Empty;
         private bool _isVisible = true;
         private string _name;
 
-        public Street(AutoQuest.Street street)
+        public StreetViewModel(Street street)
         {
             _street = street;
             _centerStreetPoint = new GeoPoint(_street.Lat, _street.Long);
@@ -41,12 +37,12 @@ namespace AutoQuest.ViewModels
 
         public string DistanceRepr
         {
-            get { return _distance1; }
+            get { return _distanceRepr; }
             private set
             {
-                if (value == _distance1)
+                if (value == _distanceRepr)
                     return;
-                _distance1 = value;
+                _distanceRepr = value;
                 OnPropertyChanged();
             }
         }
@@ -64,6 +60,14 @@ namespace AutoQuest.ViewModels
         }
 
         public double Distance => _distance;
+
+        public static string GetDistanceRepresentation(double distance)
+        {
+            if (distance <= 0)
+                return string.Empty;
+
+            return distance >= 1 ? $"{distance:F2} км." : $"{Math.Round(distance*1000)} м.";
+        }
 
         public void UpdateStates(IFilter filter)
         {
@@ -103,7 +107,7 @@ namespace AutoQuest.ViewModels
             }
 
             _distance = currentLocation.DistanceTo(_centerStreetPoint);
-            DistanceRepr = _distance >= 1 ? $"{_distance:F2} км." : $"{Math.Round(_distance * 1000)} м.";
+            DistanceRepr = GetDistanceRepresentation(_distance);
 
             return !(maxDistance > 0) || _distance <= maxDistance;
         }

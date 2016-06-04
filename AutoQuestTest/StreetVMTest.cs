@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoQuest;
 using AutoQuest.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Street = AutoQuest.ViewModels.Street;
 
 namespace AutoQuestTest
 {
@@ -42,7 +41,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
 
             var mock = new TestFilter { CurrentLocation = GeoPointTests.HouseLocation };
             streetVm.UpdateStates(mock);
@@ -59,7 +58,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
 
             var mock = new TestFilter
             {
@@ -80,7 +79,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter { CurrentLocation = GeoPointTests.HouseLocation, PossibleTypes = new[] { "улица" } };
             streetVm.UpdateStates(mock);
             var isVisibleWithoutCorrectType = streetVm.IsVisible;
@@ -101,7 +100,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter
             {
                 CurrentLocation = GeoPointTests.HouseLocation,
@@ -123,7 +122,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter
             {
                 CurrentLocation = GeoPointTests.HouseLocation,
@@ -145,7 +144,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter
             {
                 CurrentLocation = GeoPointTests.HouseLocation,
@@ -167,7 +166,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter
             {
                 CurrentLocation = GeoPointTests.HouseLocation,
@@ -189,7 +188,7 @@ namespace AutoQuestTest
                 Lat = GeoPointTests.VDNHLocation.Lat,
                 Long = GeoPointTests.VDNHLocation.Long
             };
-            var streetVm = new Street(street);
+            var streetVm = new StreetViewModel(street);
             var mock = new TestFilter
             {
                 CurrentLocation = GeoPointTests.HouseLocation,

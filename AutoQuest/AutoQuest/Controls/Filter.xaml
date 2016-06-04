@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:AutoQuest.ViewModels;assembly=AutoQuest"
              x:Class="AutoQuest.Controls.Filter">
   <ContentView.BindingContext>
-    <viewModels:Filter/>
+    <viewModels:FilterViewModel/>
   </ContentView.BindingContext>
   <Entry Text="{Binding Search, Mode=TwoWay}"/>
 </ContentView>

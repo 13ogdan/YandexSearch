@@ -4,14 +4,13 @@
              xmlns:viewModels="clr-namespace:AutoQuest.ViewModels;assembly=AutoQuest"
              x:Class="AutoQuest.Controls.StreetView">
   <ContentView.BindingContext>
-    <viewModels:FilteredSteets/>
+    <viewModels:SteetsViewModel/>
   </ContentView.BindingContext>
   <ContentView.Content>
     <ListView ItemsSource="{Binding OrderedStreets, Mode=OneWay}" IsGroupingEnabled="False" CachingStrategy="RecycleElement" >
       <ListView.ItemTemplate>
         <DataTemplate>
-         <TextCell Text="{Binding Name}" Detail="{Binding DistanceRepr}" >
-         </TextCell>
+         <TextCell Text="{Binding Name}" Detail="{Binding DistanceRepr}" />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

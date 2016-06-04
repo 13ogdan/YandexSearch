@@ -1,19 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
+
+using System.Runtime.Serialization;
 
 namespace AutoQuest
 {
     [DataContract]
     public class Street
     {
-        public Street()
-        {
-        }
-
         [DataMember(IsRequired = true, Order = 1)]
         public string Name { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
-        public string Type { get;  set; }
+        public string Type { get; set; }
 
         [DataMember(IsRequired = false, Order = 3, EmitDefaultValue = false)]
         public string District { get; private set; }

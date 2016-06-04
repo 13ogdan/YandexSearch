@@ -3,31 +3,41 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AutoQuest.API;
 
 namespace AutoQuest.ViewModels
 {
-    public class Filter : BaseViewModel, IFilter
+    public class FilterViewModel : BaseViewModel, IFilter
     {
         private readonly ILocationService _locationService;
+
+        private readonly string[] _requiredRecalculatingProperty =
+        {
+            nameof(IFilter.SearchQuery),
+            nameof(IFilter.CurrentLocation),
+            nameof(IFilter.CheckAlternativeName),
+            nameof(IFilter.MaxDistance),
+            nameof(IFilter.PossibleTypes)
+        };
+
         private bool _checkAlternativeName;
-        private ObservableCollection<string> _checkedItems;
         private GeoPoint _currentLocation;
+        private string _error;
         private double _maxDistance;
+        private string _maxDistanceRepresentation;
+        private IEnumerable<string> _possibleTypes;
         private string _search;
         private Regex _searchQuery;
-        private string _error;
+        private ObservableCollection<StreetTypeViewModel> _types;
 
         public event EventHandler FilterChanged;
 
-        public Filter()
-        {
+        public FilterViewModel() {}
 
-        }
-
-        public Filter(ILocationService locationService)
+        public FilterViewModel(ILocationService locationService)
         {
             _locationService = locationService;
             if (_locationService != null)
@@ -49,17 +59,47 @@ namespace AutoQuest.ViewModels
             }
         }
 
-        public ObservableCollection<string> CheckedItems
+        public ObservableCollection<StreetTypeViewModel> Types
         {
-            get { return _checkedItems; }
+            get { return _types; }
             set
             {
-                if (Equals(value, _checkedItems))
+                if (Equals(value, _types))
                     return;
+                if (_types != null)
+                    foreach (var streetTypeViewModel in _types)
+                        streetTypeViewModel.PropertyChanged -= StreetTypeViewModelOnPropertyChanged;
 
-                _checkedItems = value;
-                PossibleTypes = _checkedItems;
+                _types = value;
+
+                foreach (var streetTypeViewModel in _types)
+                    streetTypeViewModel.PropertyChanged += StreetTypeViewModelOnPropertyChanged;
+
                 OnPropertyChanged();
+            }
+        }
+
+        public string Error
+        {
+            get { return _error; }
+            set
+            {
+                if (value == _error)
+                    return;
+                _error = value;
+                OnPropertyChanged(nameof(Error));
+            }
+        }
+
+        public string MaxDistanceRepresentation
+        {
+            get { return _maxDistanceRepresentation; }
+            private set
+            {
+                if (value == _maxDistanceRepresentation)
+                    return;
+                _maxDistanceRepresentation = value;
+                OnPropertyChanged(MaxDistanceRepresentation);
             }
         }
 
@@ -85,6 +125,7 @@ namespace AutoQuest.ViewModels
                 if (value.Equals(_maxDistance))
                     return;
                 _maxDistance = value;
+                _maxDistanceRepresentation = StreetViewModel.GetDistanceRepresentation(_maxDistance);
                 OnPropertyChanged();
             }
         }
@@ -115,8 +156,30 @@ namespace AutoQuest.ViewModels
             }
         }
 
-        /// <summary>Gets the possible types. Empty if all types available. Created due to <see cref = "CheckedItems"/>.</summary>
-        public IEnumerable<string> PossibleTypes { get; private set; }
+        /// <summary>Gets the possible types. Empty if all types available. Created due to <see cref = "Types"/>.</summary>
+        public IEnumerable<string> PossibleTypes
+        {
+            get { return _possibleTypes; }
+            private set
+            {
+                if (Equals(value, _possibleTypes))
+                    return;
+                _possibleTypes = value;
+                OnPropertyChanged(nameof(PossibleTypes));
+            }
+        }
+
+        protected override void OnPropertyChanged(string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            if (_requiredRecalculatingProperty.Contains(propertyName))
+                FilterChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void StreetTypeViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            PossibleTypes = _types.Where(model => model.Enable).Select(model => model.Name).ToArray();
+        }
 
         private void LocationServiceOnLocationChanged(object sender, EventArgs eventArgs)
         {
@@ -141,15 +204,6 @@ namespace AutoQuest.ViewModels
                 if (Error != null)
                     OnPropertyChanged();
             }
-
-        }
-
-        public string Error { get { return _error; } set { _error = value; } }
-
-        protected override void OnPropertyChanged(string propertyName = null)
-        {
-            base.OnPropertyChanged(propertyName);
-            FilterChanged?.Invoke(this, new EventArgs());
         }
     }
 }
