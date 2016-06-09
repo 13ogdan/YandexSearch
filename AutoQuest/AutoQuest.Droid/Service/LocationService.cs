@@ -1,19 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Locations;
 using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
 using AutoQuest.API;
 using AutoQuest.Droid.Service;
-using Java.Util;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocationService))]
 namespace AutoQuest.Droid.Service
@@ -28,7 +21,7 @@ namespace AutoQuest.Droid.Service
 
         public void OnLocationChanged(Location location)
         {
-            Log.Debug("Android", "Location listener OnLocationChanged {0}", location);
+            Log.Debug("Android", "CenterStreetPoint listener OnLocationChanged {0}", location);
 
             if (location == null)
                 return;
@@ -42,17 +35,17 @@ namespace AutoQuest.Droid.Service
 
         public void OnProviderDisabled(string provider)
         {
-            Log.Debug("Android", "Location listener OnProviderDisabled {0}", provider);
+            Log.Debug("Android", "CenterStreetPoint listener OnProviderDisabled {0}", provider);
         }
 
         public void OnProviderEnabled(string provider)
         {
-            Log.Debug("Android", "Location listener OnProviderEnabled {0}", provider);
+            Log.Debug("Android", "CenterStreetPoint listener OnProviderEnabled {0}", provider);
         }
 
         public void OnStatusChanged(string provider, Availability status, Bundle extras)
         {
-            Log.Debug("Android", "Location listener OnStatusChanged {0} ({1})", provider, status);
+            Log.Debug("Android", "CenterStreetPoint listener OnStatusChanged {0} ({1})", provider, status);
         }
     }
     class LocationService : ILocationService
@@ -74,8 +67,8 @@ namespace AutoQuest.Droid.Service
 
             _criteria = new Criteria()
             {
-                Accuracy = Accuracy.Fine,
-                AltitudeRequired = true,
+                Accuracy = Accuracy.NoRequirement,
+                AltitudeRequired = false,
                 BearingRequired = false,
                 SpeedRequired = false,
                 PowerRequirement = Power.NoRequirement
@@ -94,7 +87,7 @@ namespace AutoQuest.Droid.Service
                 var builder = new AlertDialog.Builder(MainActivity.Instance);
                 builder.SetTitle("GPS navigation");
                 builder.SetMessage("Please turn on GPS navigation");
-                builder.SetNegativeButton("Thanks", (sender, args) =>
+                builder.SetNegativeButton("No thanks", (sender, args) =>
                 {
 
                 });
@@ -123,7 +116,6 @@ namespace AutoQuest.Droid.Service
 
         public void StopListen()
         {
-            _locationManager.UnregisterFromRuntime();
             _locationManager.RemoveUpdates(_locationListener);
         }
 
@@ -134,9 +126,9 @@ namespace AutoQuest.Droid.Service
 
         private void ListenToBestProvider()
         {
-            _locationProvider = _locationManager.GetBestProvider(_criteria, true);
+            _locationProvider = _locationManager.GetBestProvider(_criteria, false);
             if (ProviderEnabled())
-                _locationManager.RequestLocationUpdates(_locationProvider, 0, 0, _locationListener);
+                _locationManager.RequestLocationUpdates(_locationProvider, 1000 , 100, _locationListener);
         }
     }
 }

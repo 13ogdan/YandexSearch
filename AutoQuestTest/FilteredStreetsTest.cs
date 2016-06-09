@@ -18,7 +18,7 @@ namespace AutoQuestTest
         {
             var sl = new StreetLoader();
             var streets = sl.LoadStreets();
-            _streets = new SteetsViewModel(streets);
+            _streets = new SteetsViewModel(streets, null);
         }
 
         [TestMethod]

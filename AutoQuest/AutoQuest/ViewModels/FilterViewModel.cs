@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using AutoQuest.API;
 
@@ -99,7 +100,7 @@ namespace AutoQuest.ViewModels
                 if (value == _maxDistanceRepresentation)
                     return;
                 _maxDistanceRepresentation = value;
-                OnPropertyChanged(MaxDistanceRepresentation);
+                OnPropertyChanged();
             }
         }
 
@@ -125,7 +126,7 @@ namespace AutoQuest.ViewModels
                 if (value.Equals(_maxDistance))
                     return;
                 _maxDistance = value;
-                _maxDistanceRepresentation = StreetViewModel.GetDistanceRepresentation(_maxDistance);
+                MaxDistanceRepresentation = StreetViewModel.GetDistanceRepresentation(_maxDistance);
                 OnPropertyChanged();
             }
         }
@@ -169,7 +170,7 @@ namespace AutoQuest.ViewModels
             }
         }
 
-        protected override void OnPropertyChanged(string propertyName = null)
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
             if (_requiredRecalculatingProperty.Contains(propertyName))

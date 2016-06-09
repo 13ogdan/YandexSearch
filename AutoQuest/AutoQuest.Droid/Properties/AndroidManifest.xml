@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="Alpha">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="AutoQuest.Droid">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="22" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-	<application android:icon="@drawable/icon" />
+	<application android:icon="@drawable/icon" android:label="AutoQuest.Droid" />
 </manifest>

@@ -1,5 +1,6 @@
 ﻿// <copyright>"☺ Raccoon corporation ©  1989"</copyright>
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoQuest.API;
+using Xamarin.Forms;
 
 namespace AutoQuest.ViewModels
 {
@@ -23,7 +25,17 @@ namespace AutoQuest.ViewModels
         {
             _navigationService = navigationService;
             _streetsViewModel = streets.Select(street => new StreetViewModel(street)).ToArray();
+            if (navigationService != null && navigationService.IsAvailable)
+                foreach (var streetViewModel in _streetsViewModel)
+                {
+                    streetViewModel.NavigateCommand = new Command<StreetViewModel>(NavigateTo); 
+                }
             OrderedStreets = new ObservableCollection<StreetViewModel>(_streetsViewModel);
+        }
+
+        private void NavigateTo(StreetViewModel streetViewModel)
+        {
+            _navigationService.NavigateTo(streetViewModel.CenterStreetPoint);
         }
 
         public ObservableCollection<StreetViewModel> OrderedStreets
@@ -51,7 +63,7 @@ namespace AutoQuest.ViewModels
                     }
                     if (!cts.IsCancellationRequested)
                     {
-                        Debug.WriteLine($"(Line 52) : Max distance :{filter.MaxDistance}, " +
+                        Debug.WriteLine($"Max distance :{filter.MaxDistance}, " +
                                         $"IsCanceled: {_cts.IsCancellationRequested}, " +
                                         $"IsLocalCanceled {cts.IsCancellationRequested}");
                         OrderedStreets =
