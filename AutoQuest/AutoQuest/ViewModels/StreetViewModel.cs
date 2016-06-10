@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Xamarin.Forms;
 
 namespace AutoQuest.ViewModels
 {
@@ -15,7 +16,8 @@ namespace AutoQuest.ViewModels
         private string _distanceRepr = string.Empty;
         private bool _isVisible = true;
         private string _name;
-
+        private Command<StreetViewModel> _navigateCommand;
+        
         public StreetViewModel(Street street)
         {
             _street = street;
@@ -60,6 +62,20 @@ namespace AutoQuest.ViewModels
         }
 
         public double Distance => _distance;
+
+        public Command<StreetViewModel> NavigateCommand
+        {
+            get { return _navigateCommand; }
+            set
+            {
+                if (Equals(value, _navigateCommand))
+                    return;
+                _navigateCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public GeoPoint CenterStreetPoint { get { return _centerStreetPoint; } }
 
         public static string GetDistanceRepresentation(double distance)
         {

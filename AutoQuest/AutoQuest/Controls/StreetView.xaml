@@ -10,7 +10,7 @@
     <ListView ItemsSource="{Binding OrderedStreets, Mode=OneWay}" IsGroupingEnabled="False" CachingStrategy="RecycleElement" >
       <ListView.ItemTemplate>
         <DataTemplate>
-         <TextCell Text="{Binding Name}" Detail="{Binding DistanceRepr}" />
+         <TextCell Text="{Binding Name}" Detail="{Binding DistanceRepr}" Command="{Binding NavigateCommand}" CommandParameter="{Binding}" />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
