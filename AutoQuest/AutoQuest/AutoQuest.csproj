@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="API\INavigationService.cs" />
+    <Compile Include="API\IClipboardService.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Controls\CircleProgressBar.cs" />
     <Compile Include="Controls\Filter.xaml.cs">

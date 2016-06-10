@@ -1,15 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.Content.PM;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using AutoQuest.API;
 using AutoQuest.Droid.Service;
 using Xamarin.Forms;
@@ -17,36 +7,65 @@ using Xamarin.Forms;
 [assembly: Xamarin.Forms.Dependency(typeof(NavigationService))]
 namespace AutoQuest.Droid.Service
 {
-    
-    public class NavigationService: INavigationService
+    public class NavigationService : INavigationService
     {
+        public class YandexIntent
+        {
+            public const string NavigateAction = "BUILD_ROUTE_ON_MAP";
+            public const string ShowOnMap = "SHOW_POINT_ON_MAP";
+            private readonly string _prefix;
+
+            public YandexIntent(string prefix)
+            {
+                _prefix = prefix;
+            }
+
+            public Intent GetIntent(string action)
+            {
+                var intent = new Intent($"{_prefix}.action.{action}");
+                intent.SetPackage(_prefix);
+                // check if Yandex package available 
+                var pm = Forms.Context.PackageManager;
+                var infos = pm.QueryIntentActivities(intent, 0);
+                if (infos == null || !infos.Any())
+                    return null;
+
+                return intent;
+            }
+        }
+
         private readonly bool _isAvailable;
+        private readonly YandexIntent _mapIntent;
+        private readonly YandexIntent _naviIntent;
 
         /// <summary>Initializes a new instance of the <see cref="NavigationService"/> class.</summary>
         public NavigationService()
         {
-            // https://github.com/yandexmobile/yandexmapkit-android/wiki/%D0%98%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D1%81-%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC
-            // Создаем интент для построения маршрута
-            var intent = new Intent("ru.yandex.yandexnavi.action.BUILD_ROUTE_ON_MAP");
-            intent.SetPackage("ru.yandex.yandexnavi");
-
-            // check if Yandex navigator available 
-            var pm = Forms.Context.PackageManager;
-            var infos = pm.QueryIntentActivities(intent, 0);
-            if (infos == null || !infos.Any())
-                return;
-
-            _isAvailable = true;
+            _mapIntent = new YandexIntent("ru.yandex.yandexmaps");
+            _naviIntent = new YandexIntent("ru.yandex.yandexnavi");
+            _isAvailable = _naviIntent.GetIntent(YandexIntent.NavigateAction) != null || _mapIntent.GetIntent(YandexIntent.NavigateAction) != null;
         }
 
         public bool IsAvailable { get { return _isAvailable; } }
 
         public void NavigateTo(GeoPoint geoPoint)
         {
-            var intent = new Intent("ru.yandex.yandexnavi.action.BUILD_ROUTE_ON_MAP");
-            intent.SetPackage("ru.yandex.yandexnavi");
+            var intent = _naviIntent.GetIntent(YandexIntent.NavigateAction) ?? _mapIntent.GetIntent(YandexIntent.NavigateAction);
+
             intent.PutExtra("lat_to", geoPoint.Lat);
             intent.PutExtra("lon_to", geoPoint.Long);
+
+            MainActivity.Instance.StartActivity(intent);
+        }
+
+        public void ShowOnMap(GeoPoint geoPoint)
+        {
+            var intent = _mapIntent.GetIntent(YandexIntent.ShowOnMap) ?? _naviIntent.GetIntent(YandexIntent.ShowOnMap);
+
+            intent.PutExtra("lat", geoPoint.Lat);
+            intent.PutExtra("lon", geoPoint.Long);
+
+            MainActivity.Instance.StartActivity(intent);
         }
     }
 }

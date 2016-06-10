@@ -10,5 +10,6 @@ namespace AutoQuest.API
     {
         bool IsAvailable { get; }
         void NavigateTo(GeoPoint geoPoint);
+        void ShowOnMap(GeoPoint geoPoint);
     }
 }
